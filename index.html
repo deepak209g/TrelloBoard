@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <!-- Add this to <head> -->
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link href="font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="container" class="container">
+        <div id="header">
+            <div class="row">
+                <div class="col mx-1 bg-purple-dark">
+                    TODO
+                </div>
+                <div class="col mx-1 bg-purple">
+                    IN PROGRESS
+                </div>
+                <div class="col mx-1 bg-purple-light">
+                    DONE
+                </div>
+            </div>
+        </div>
+        <div id="lists">
+            <div class="row">
+                <draggable v-model="TODO" class="dragArea col mx-1 bg-purple-dark" :options="{group:'tasks'}">
+                    <div class="task-card" v-for="element in TODO">
+
+                        <h1>{{element.name}}
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <span class="oi oi-x"></span>
+                        </h1>
+                        <p>{{element.description}}</p>
+
+                    </div>
+                </draggable>
+                <draggable v-model="IN_PROGRESS" class="dragArea col mx-1 bg-purple" :options="{group:'tasks'}">
+                    <div class="task-card" v-for="element in IN_PROGRESS">
+                        <h1>{{element.name}}</h1>
+                        <p>{{element.description}}</p>
+                    </div>
+                </draggable>
+                <draggable v-model="DONE" class="dragArea col mx-1 bg-purple-light" :options="{group:'tasks'}">
+                    <div class="task-card" v-for="element in DONE">
+                        <h1>{{element.name}}</h1>
+                        <p>{{element.description}}</p>
+                    </div>
+                </draggable>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="new-todo">
+        <b-button @click="showModal">
+            Open Modal
+        </b-button>
+        <b-modal id="modalPrevent" ref="modal" title="Create new task" @ok="handleOk" @shown="clearForm">
+            <form @submit.stop.prevent="handleSubmit">
+                <b-form-input type="text" placeholder="Enter task name" v-model="name"></b-form-input>
+                <b-form-textarea id="textarea1" v-model="description" placeholder="Enter a description" :rows="3" :max-rows="6">
+                </b-form-textarea>
+            </form>
+        </b-modal>
+    </div>
+</body>
+<!-- Vue.js -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- Bootstrap-vue added after vue.js -->
+<script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.16.0/vuedraggable.min.js"></script>
+<!-- localforge used to maintain state -->
+<script src="js/localforage.js"></script>
+<!-- application logic -->
+<script src="js/index.js"></script>
+
+</html>

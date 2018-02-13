@@ -1,0 +1,68 @@
+/* @import url("//unpkg.com/element-ui@2.2.0/lib/theme-chalk/index.css"); */
+
+*{
+  font-family: 'Courier New', Courier, monospace;
+}
+body{
+  position: relative;
+  height: 100%;
+}
+#header{
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: 900;
+  color: #464951;
+}
+
+
+.el-row {
+  margin-bottom: 20px;
+}
+.el-row:last-child {
+  margin-bottom: 0;
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  /* min-height: 36px; */
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+
+#lists{
+  position: relative;
+  padding-top: 10px;
+}
+
+#lists .grid-content{
+  position: relative;
+  min-height: 200px;
+}
+
+.dragArea {
+  min-height: 200px;
+}
+
+.task-card:nth-child(1) {
+  
+}
+
+.glyphicon{
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
