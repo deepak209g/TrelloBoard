@@ -40,8 +40,8 @@
         </div>
         <div id="lists">
             <div class="row">
-                <draggable v-model="TODO" class="dragArea col mx-1 bg-purple-dark" :options="{group:'tasks'}" :move="checkMove" name="todo">
-                    <div class="task-card row" v-for="(element, index) in filteredTODO">
+                <draggable v-model="TODO" class="dragArea col mx-1" :options="{group:'tasks'}" :move="checkMove" name="todo">
+                    <div class="task-card row my-2" v-for="(element, index) in filteredTODO">
                         <div class="card-text col-10">
                             <h1>{{element.name}}</h1>
                             <p>{{element.description}}</p>
@@ -52,8 +52,8 @@
                         </div>
                     </div>
                 </draggable>
-                <draggable v-model="IN_PROGRESS" class="dragArea col mx-1 bg-purple" :options="{group:'tasks'}" :move="checkMove" name="in_progress">
-                    <div class="task-card row" v-for="(element, index) in filteredIN_PROGRESS">
+                <draggable v-model="IN_PROGRESS" class="dragArea col mx-1" :options="{group:'tasks'}" :move="checkMove" name="in_progress">
+                    <div class="task-card row my-2" v-for="(element, index) in filteredIN_PROGRESS">
                         <div class="card-text col-10">
                             <h1>{{element.name}}</h1>
                             <p>{{element.description}}</p>
@@ -64,8 +64,8 @@
                         </div>
                     </div>
                 </draggable>
-                <draggable v-model="DONE" class="dragArea col mx-1 bg-purple-light" :options="{group:'tasks'}" :move="checkMove" name="done">
-                    <div class="task-card row" v-for="(element, index) in filteredDONE">
+                <draggable v-model="DONE" class="dragArea col mx-1" :options="{group:'tasks'}" :move="checkMove" name="done">
+                    <div class="task-card row my-2" v-for="(element, index) in filteredDONE">
                         <div class="card-text col-10">
                             <h1>{{element.name}}</h1>
                             <p>{{element.description}}</p>
