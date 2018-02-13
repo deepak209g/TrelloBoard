@@ -13,7 +13,18 @@
 </head>
 
 <body>
-    <div id="container" class="container">
+    <div id="container" class="container mt-2">
+        <div id="options" class="mb-2">
+            <div class="row">
+                <div id="search-fun" class="col-9 px-0 bg-purple-dark container">
+                    <input type="text" v-model='search_term' class="bg-purple-dark" placeholder="Enter text to filter lists">
+                </div>
+                <div class="col-3 bg-purple-light" id="todobutton" @click="createNewTODO">
+                    Create
+                </div>
+            </div>
+
+        </div>
         <div id="header">
             <div class="row">
                 <div class="col mx-1 bg-purple-dark">
@@ -29,27 +40,40 @@
         </div>
         <div id="lists">
             <div class="row">
-                <draggable v-model="TODO" class="dragArea col mx-1 bg-purple-dark" :options="{group:'tasks'}">
-                    <div class="task-card" v-for="element in TODO">
-
-                        <h1>{{element.name}}
-                            <span class="glyphicon glyphicon-edit"></span>
-                            <span class="oi oi-x"></span>
-                        </h1>
-                        <p>{{element.description}}</p>
-
+                <draggable v-model="TODO" class="dragArea col mx-1 bg-purple-dark" :options="{group:'tasks'}" :move="checkMove" name="todo">
+                    <div class="task-card row" v-for="(element, index) in filteredTODO">
+                        <div class="card-text col-10">
+                            <h1>{{element.name}}</h1>
+                            <p>{{element.description}}</p>
+                        </div>
+                        <div class="card-actions col-2 py-1">
+                            <span class="oi oi-x" v-on:click="removeElement(TODO, index)"></span>
+                            <span class="oi oi-text" v-on:click="editElement(TODO, index)"></span>
+                        </div>
                     </div>
                 </draggable>
-                <draggable v-model="IN_PROGRESS" class="dragArea col mx-1 bg-purple" :options="{group:'tasks'}">
-                    <div class="task-card" v-for="element in IN_PROGRESS">
-                        <h1>{{element.name}}</h1>
-                        <p>{{element.description}}</p>
+                <draggable v-model="IN_PROGRESS" class="dragArea col mx-1 bg-purple" :options="{group:'tasks'}" :move="checkMove" name="in_progress">
+                    <div class="task-card row" v-for="(element, index) in filteredIN_PROGRESS">
+                        <div class="card-text col-10">
+                            <h1>{{element.name}}</h1>
+                            <p>{{element.description}}</p>
+                        </div>
+                        <div class="card-actions col-2 py-1">
+                            <span class="oi oi-x" v-on:click="removeElement(IN_PROGRESS, index)"></span>
+                            <span class="oi oi-text" v-on:click="editElement(IN_PROGRESS, index)"></span>
+                        </div>
                     </div>
                 </draggable>
-                <draggable v-model="DONE" class="dragArea col mx-1 bg-purple-light" :options="{group:'tasks'}">
-                    <div class="task-card" v-for="element in DONE">
-                        <h1>{{element.name}}</h1>
-                        <p>{{element.description}}</p>
+                <draggable v-model="DONE" class="dragArea col mx-1 bg-purple-light" :options="{group:'tasks'}" :move="checkMove" name="done">
+                    <div class="task-card row" v-for="(element, index) in filteredDONE">
+                        <div class="card-text col-10">
+                            <h1>{{element.name}}</h1>
+                            <p>{{element.description}}</p>
+                        </div>
+                        <div class="card-actions col-2 py-1">
+                            <span class="oi oi-x" v-on:click="removeElement(DONE, index)"></span>
+                            <span class="oi oi-text" v-on:click="editElement(DONE, index)"></span>
+                        </div>
                     </div>
                 </draggable>
             </div>
@@ -57,11 +81,8 @@
         </div>
 
     </div>
-    <div id="new-todo">
-        <b-button @click="showModal">
-            Open Modal
-        </b-button>
-        <b-modal id="modalPrevent" ref="modal" title="Create new task" @ok="handleOk" @shown="clearForm">
+    <div id="todo-editor">
+        <b-modal ref="modal" title="Create new task" @ok="handleOk">
             <form @submit.stop.prevent="handleSubmit">
                 <b-form-input type="text" placeholder="Enter task name" v-model="name"></b-form-input>
                 <b-form-textarea id="textarea1" v-model="description" placeholder="Enter a description" :rows="3" :max-rows="6">
