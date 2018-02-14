@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- import CSS -->
-    <!-- Add this to <head> -->
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
     <link href="font/css/open-iconic-bootstrap.css" rel="stylesheet">
@@ -85,7 +83,7 @@
 
     </div>
     <div id="todo-editor">
-        <b-modal ref="modal" title="Create new task" @ok="handleOk">
+        <b-modal ref="modal" title="Task Details" @ok="handleOk">
             <form @submit.stop.prevent="handleSubmit">
                 <b-form-input type="text" placeholder="Enter task name" v-model="name"></b-form-input>
                 <b-form-textarea id="textarea1" v-model="description" placeholder="Enter a description" :rows="3" :max-rows="6">

@@ -10,20 +10,22 @@ localforage.config({
 });
 
 
+// This is our entire model
+// taskcount though redundant as of now, can be used to improve search based on ticket number, etc.
 var model = {
     taskcount: 0,
     TODO: [],
     IN_PROGRESS: [],
     DONE: []
 };
+
+
+// update the model from local storage as soon  as the application launches
 localforage.getItem('model').then(function(data){
     if (data != null) {
         // data present in local storage
         console.log(data)
         for(key in data){
-            
-            console.log(key)
-            console.log(data[key])
             Vue.set(lists, key, data[key])
         }
         
@@ -35,7 +37,6 @@ localforage.getItem('model').then(function(data){
 
 
 // This is a simple constructor for a task object
-
 var Task = function (name, description, taskid) {
     this.taskid = taskid
     this.name = name
@@ -43,7 +44,7 @@ var Task = function (name, description, taskid) {
 }
 
 
-// Because I know that you will like the search functionality :D
+// Because I know that you will like the search/filter functionality :D
 var searchFun = new Vue({
     el: '#search-fun',
     data: {
@@ -53,7 +54,7 @@ var searchFun = new Vue({
 
 
 // Vue object for managing lists
-// Note that the lists here are draggable and sortable due to draggable and sortable module used.
+// Note that the lists here are draggable and sortable due to draggable and sortable modules used.
 var lists = new Vue({
     el: "#lists",
     data: model,
@@ -97,6 +98,8 @@ var lists = new Vue({
     }
 });
 
+
+// basic filtering logic for filtering lists based on text entered
 function keyword_filter(origlist, s_term){
     console.log(typeof origlist)
     return origlist.filter(function(item){
@@ -110,6 +113,7 @@ function keyword_filter(origlist, s_term){
     })
 }
 
+// helper function to add watchers to vue model as the model gets updated after restoring from local storage
 function watchfun(){
     toret = {}
     for(key in model){
@@ -123,8 +127,7 @@ function watchfun(){
 
 
 
-// creating a new todo item
-// This is a Vue object that encaptulates the functionlity of creation of new task.
+// This is a Vue object that encaptulates the functionlity of creation/edit of new task.
 var todoeditor = new Vue({
     el: "#todo-editor",
     data() {
